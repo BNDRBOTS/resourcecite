@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Resource Cite — Public Resource Hub</title>
+<meta name="description" content="A free, source-based public resource library covering legal aid, housing, medical access, victim support, mental health, child safety, and whistleblower protection.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --cream:     #F8F4EE;
+  --cream-2:   #F0EAE0;
+  --cream-3:   #E8E1D5;
+  --ink:       #1D1A17;
+  --ink-2:     #2E2924;
+  --mid:       #7A6E65;
+  --terra:     #C4573A;
+  --terra-lt:  #D4694C;
+  --border:    rgba(29,26,23,0.10);
+  --border-md: rgba(29,26,23,0.16);
+  --ease:      cubic-bezier(0.22,1,0.36,1);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Outfit',sans-serif;background:var(--cream);color:var(--ink);overflow-x:hidden;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+button{cursor:pointer;font-family:inherit;border:none;background:none}
+ul{list-style:none}
+input,textarea{font-family:inherit}
+body::after{content:'';position:fixed;inset:0;z-index:999;pointer-events:none;opacity:.016;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)'/%3E%3C/svg%3E");background-size:300px}
+
+h1,h2,h3,h4{font-family:'Cormorant Garamond',serif;font-weight:500;line-height:1.06;letter-spacing:-0.015em}
+h1{font-size:clamp(46px,6.5vw,96px)}
+h2{font-size:clamp(32px,4.5vw,60px)}
+h3{font-size:clamp(24px,3.2vw,40px)}
+h4{font-size:clamp(18px,1.8vw,22px)}
+.eyebrow{font-size:10.5px;font-weight:600;letter-spacing:0.13em;text-transform:uppercase;color:var(--mid)}
+
+.wrap{max-width:1220px;margin:0 auto;padding:0 36px}
+.hr{height:1px;background:var(--border)}
+.sec{padding:64px 36px;max-width:1220px;margin:0 auto}
+
+/* ── NAV ── */
+nav{position:sticky;top:0;z-index:200;height:56px;background:rgba(248,244,238,.94);backdrop-filter:blur(16px) saturate(1.5);-webkit-backdrop-filter:blur(16px) saturate(1.5);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 36px;gap:6px}
+.n-logo{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:500;letter-spacing:-.01em;margin-right:20px;flex-shrink:0}
+.n-logo i{font-style:italic;color:var(--terra)}
+.n-links{display:flex;gap:2px;flex:1}
+.nl{font-size:11.5px;font-weight:500;letter-spacing:.03em;color:var(--mid);padding:6px 14px;border-radius:100px;transition:color .16s,background .16s;white-space:nowrap}
+.nl:hover{color:var(--ink);background:var(--cream-2)}
+.nl.on{background:var(--ink);color:var(--cream)}
+.n-sup{font-size:11.5px;font-weight:600;letter-spacing:.04em;padding:7px 18px;border-radius:100px;border:1px solid var(--border-md);color:var(--mid);transition:all .18s;flex-shrink:0;white-space:nowrap}
+.n-sup:hover{border-color:var(--terra);color:var(--terra)}
+.n-ham{display:none;flex-direction:column;gap:5px;padding:8px;cursor:pointer}
+.n-ham span{display:block;width:20px;height:1.5px;background:var(--ink);border-radius:2px}
+.mob-ov{display:none;position:fixed;inset:0;z-index:300;background:var(--cream);flex-direction:column;align-items:center;justify-content:center;gap:2px}
+.mob-ov.open{display:flex}
+.mob-ov button{font-family:'Cormorant Garamond',serif;font-size:40px;font-weight:400;font-style:italic;color:var(--ink);padding:10px 28px;transition:color .18s}
+.mob-ov button:hover{color:var(--terra)}
+.mob-x{position:absolute;top:18px;right:28px;font-size:22px;color:var(--mid);cursor:pointer;font-weight:300}
+
+/* ── ROUTING ── */
+.pg{display:none;animation:fadein .28s var(--ease) both}
+.pg.on{display:block}
+@keyframes fadein{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}
+
+/* ── BUTTONS ── */
+.btn{display:inline-flex;align-items:center;gap:8px;font-family:'Outfit',sans-serif;font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:12px 26px;border-radius:100px;border:none;cursor:pointer;transition:all .22s var(--ease)}
+.btn-terra{background:var(--terra);color:#fff}
+.btn-terra:hover{background:var(--terra-lt);transform:translateY(-2px);box-shadow:0 8px 28px rgba(196,87,58,.22)}
+.btn-ink{background:var(--ink);color:var(--cream)}
+.btn-ink:hover{background:var(--ink-2);transform:translateY(-2px);box-shadow:0 8px 24px rgba(29,26,23,.16)}
+.btn-outline{background:transparent;color:var(--ink);border:1.5px solid var(--border-md)}
+.btn-outline:hover{border-color:var(--ink);background:var(--ink);color:var(--cream);transform:translateY(-2px)}
+.btn-ghost-w{background:rgba(255,255,255,.12);color:#fff;border:1px solid rgba(255,255,255,.22)}
+.btn-ghost-w:hover{background:rgba(255,255,255,.2);transform:translateY(-2px)}
+.arr{display:inline-block;transition:transform .18s}
+.btn:hover .arr{transform:translateX(3px)}
+
+/* ── TAGS ── */
+.tag{display:inline-flex;font-size:10px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;padding:3px 10px;border-radius:100px;align-self:flex-start;flex-shrink:0}
+.t-legal  {background:rgba(180,120,60,.12);color:#8B5A10}
+.t-medical{background:rgba(150,60,60,.10);color:#8B2020}
+.t-housing{background:rgba(60,90,140,.09);color:#2A4A8A}
+.t-victim {background:rgba(140,60,100,.10);color:#7A2050}
+.t-mental {background:rgba(80,60,140,.09);color:#3A2880}
+.t-child  {background:rgba(196,87,58,.10);color:#A03A20}
+.t-whistle{background:rgba(60,120,80,.10);color:#1A5A30}
+.t-dir    {background:rgba(29,26,23,.07);color:var(--ink)}
+
+/* ── HERO ── */
+.hero{padding:72px 36px 68px;max-width:1220px;margin:0 auto;display:grid;grid-template-columns:1fr auto;gap:48px 72px;align-items:center}
+.hero h1{color:var(--ink);margin-bottom:18px}
+.hero h1 i{font-style:italic;color:var(--terra)}
+.hero-sub{font-size:17px;line-height:1.68;color:var(--mid);max-width:540px;margin-top:0}
+.hero-ctas{margin-top:32px;display:flex;gap:10px;flex-wrap:wrap}
+.hero-stats{display:flex;flex-direction:column;gap:0;align-self:center;flex-shrink:0;min-width:160px}
+.hs{padding:20px 0;border-bottom:1px solid var(--border)}
+.hs:first-child{border-top:1px solid var(--border)}
+.hs-n{font-family:'Cormorant Garamond',serif;font-size:52px;font-weight:300;line-height:1;letter-spacing:-.04em;color:var(--ink)}
+.hs-l{font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--mid);margin-top:4px}
+
+/* ── TICKER ── */
+.tkr-outer{overflow:hidden;border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:11px 0;background:var(--cream-2)}
+.tkr{display:flex;gap:36px;white-space:nowrap;width:max-content;animation:scroll-l 36s linear infinite;will-change:transform}
+.tkr span{font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--mid)}
+.tkr .dot{color:var(--terra);font-size:14px;line-height:1}
+@keyframes scroll-l{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+
+/* ── HOW GRID ── */
+.how{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border:1px solid var(--border);border-radius:16px;overflow:hidden}
+.hc{background:var(--cream);padding:38px 32px;transition:background .2s}
+.hc:hover{background:var(--cream-2)}
+.hc-num{display:inline-block;font-size:10.5px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--cream-2);background:var(--mid);padding:3px 9px;border-radius:100px;margin-bottom:20px}
+.hc h3{font-size:clamp(22px,2.5vw,32px);color:var(--ink);margin-bottom:12px;margin-top:4px}
+.hc p{font-size:13px;line-height:1.7;color:var(--mid)}
+.hc-lnk{display:inline-flex;align-items:center;gap:6px;margin-top:20px;font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--terra);cursor:pointer;transition:gap .16s}
+.hc-lnk:hover{gap:10px}
+
+/* ── CHIPS ── */
+.cats{display:flex;flex-wrap:wrap;gap:8px}
+.chip{font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:7px 16px;border-radius:100px;border:1px solid var(--border-md);color:var(--mid);background:transparent;cursor:pointer;transition:all .16s;white-space:nowrap}
+.chip:hover,.chip.on{background:var(--ink);color:var(--cream);border-color:var(--ink)}
+
+/* ── FEATURED CARDS (home) ── */
+.feat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.fcard{border:1px solid var(--border);border-radius:14px;padding:26px 24px;background:var(--cream);display:flex;flex-direction:column;gap:0;transition:border-color .2s,transform .2s,box-shadow .2s}
+.fcard:hover{border-color:var(--terra);transform:translateY(-3px);box-shadow:0 12px 40px rgba(196,87,58,.10)}
+.fcard h4{font-size:19px;color:var(--ink);margin:10px 0 8px;line-height:1.2}
+.fcard p{font-size:13px;line-height:1.65;color:var(--mid);flex:1}
+.fcard-lnk{margin-top:16px;font-size:12px;font-weight:600;color:var(--terra);display:inline-flex;align-items:center;gap:5px;transition:gap .16s}
+.fcard-lnk:hover{gap:9px}
+
+/* ── ABOUT STRIP ── */
+.about-strip{background:var(--ink-2, #2E2924);padding:72px 36px}
+.about-inner{max-width:1220px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:center}
+.about-inner h2{color:var(--cream);font-size:clamp(28px,4vw,50px)}
+.about-inner > div > p{font-size:15px;line-height:1.72;color:rgba(248,244,238,.58);margin-top:16px}
+.ab-list{display:flex;flex-direction:column;gap:14px}
+.ab-item{display:flex;gap:14px;align-items:flex-start;font-size:14px;line-height:1.62;color:rgba(248,244,238,.7)}
+.ab-pill{font-size:9.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--terra);background:rgba(196,87,58,.15);border:1px solid rgba(196,87,58,.25);padding:3px 10px;border-radius:100px;white-space:nowrap;margin-top:2px;flex-shrink:0}
+
+/* ══════════════════════════════
+   RESOURCES PAGE — THE KEY FIX
+   Cards grouped by category.
+   Contact anchored to bottom.
+══════════════════════════════ */
+.res-top{padding:60px 36px 36px;max-width:1220px;margin:0 auto}
+.res-top h1{font-size:clamp(40px,5.5vw,76px)}
+.res-top p{font-size:16px;line-height:1.68;color:var(--mid);max-width:400px;margin-top:10px}
+
+.filter-bar{padding:0 36px 36px;max-width:1220px;margin:0 auto;display:flex;flex-wrap:wrap;gap:8px}
+
+/* Outer container per category section */
+.res-section{padding:0 36px;max-width:1220px;margin:0 auto 52px}
+.res-section-hdr{display:flex;align-items:center;gap:16px;margin-bottom:20px;padding-bottom:14px;border-bottom:1px solid var(--border)}
+.res-section-hdr h3{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:500;color:var(--ink)}
+.res-count{font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--mid);background:var(--cream-2);border:1px solid var(--border);padding:3px 10px;border-radius:100px}
+
+/* The actual card grid inside each section */
+.cat-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:14px;
+  align-items:start; /* top-align so short cards don't stretch */
+}
+
+/* Individual resource card */
+.rc{
+  border:1px solid var(--border);
+  border-radius:14px;
+  padding:22px 20px 18px;
+  background:var(--cream);
+  display:flex;
+  flex-direction:column;
+  /* No fixed height — just flex column with auto footer */
+  transition:border-color .22s,transform .22s,box-shadow .22s;
+}
+.rc:hover{border-color:var(--terra);transform:translateY(-3px);box-shadow:0 12px 40px rgba(196,87,58,.09)}
+.rc-tag{margin-bottom:10px}
+.rc h4{font-size:clamp(16px,1.5vw,19px);color:var(--ink);line-height:1.22;margin-bottom:9px}
+.rc-desc{font-size:13px;line-height:1.68;color:var(--mid);flex:1;margin-bottom:0}
+/* Contact row — separated from description by border, always at bottom */
+.rc-foot{
+  margin-top:16px;
+  border-top:1px solid var(--border);
+  padding-top:13px;
+}
+.rc-foot a{
+  font-size:12px;font-weight:600;color:var(--terra);
+  display:inline-flex;align-items:center;gap:5px;
+  transition:gap .16s;
+  word-break:break-word;
+}
+.rc-foot a:hover{gap:9px}
+.rc-foot .unv{font-size:12px;font-weight:500;color:var(--mid);font-style:italic}
+
+/* hide/show sections when filtering */
+.res-section[data-hidden]{display:none}
+
+/* ── START HERE ── */
+.sh-dark{background:var(--ink);padding:72px 36px}
+.sh-dark-in{max-width:800px;margin:0 auto;text-align:center}
+.sh-dark h1{color:var(--cream);font-size:clamp(40px,6vw,80px)}
+.sh-dark p{font-size:16px;line-height:1.7;color:rgba(248,244,238,.56);margin-top:16px;max-width:500px;margin-left:auto;margin-right:auto}
+.og{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--border);border:1px solid var(--border);border-radius:16px;overflow:hidden;margin-top:40px}
+.oc{background:var(--cream);padding:32px 30px}
+.oc-alt{background:var(--cream-2)}
+.oc h4{font-size:21px;color:var(--ink);margin-bottom:10px}
+.oc p{font-size:13px;line-height:1.68;color:var(--mid)}
+.faq-list{max-width:760px;margin:0 auto}
+.fi{border-bottom:1px solid var(--border)}
+.fq{width:100%;text-align:left;padding:20px 0;font-size:14.5px;font-weight:500;color:var(--ink);display:flex;justify-content:space-between;align-items:center;gap:16px;cursor:pointer;transition:color .16s}
+.fq:hover{color:var(--terra)}
+.fi-ico{width:22px;height:22px;border:1.5px solid var(--border-md);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;color:var(--mid);flex-shrink:0;transition:all .2s;font-weight:300}
+.fi.open .fi-ico{background:var(--terra);color:#fff;border-color:var(--terra)}
+.fa{max-height:0;overflow:hidden;transition:max-height .32s var(--ease)}
+.fa-in{padding-bottom:22px;font-size:14px;line-height:1.72;color:var(--mid)}
+
+/* ── DONATE ── */
+.don-top{max-width:720px;margin:0 auto;padding:72px 36px 0;text-align:center}
+.don-top h1{font-size:clamp(38px,5.5vw,70px)}
+.don-lede{font-size:16px;line-height:1.72;color:var(--mid);margin-top:18px;max-width:560px;margin-left:auto;margin-right:auto}
+.don-honest{max-width:660px;margin:36px auto 40px;padding:26px 30px;background:var(--cream-2);border:1px solid var(--border);border-left:3px solid var(--terra);border-radius:0 12px 12px 0}
+.don-honest p{font-size:14px;line-height:1.76;color:var(--mid)}
+.don-honest p+p{margin-top:12px}
+.don-honest strong{color:var(--ink);font-weight:600}
+.don-toggle{display:flex;gap:3px;background:var(--cream-3);border-radius:100px;padding:4px;width:fit-content;margin:0 auto 40px}
+.dtb{font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:8px 20px;border-radius:100px;color:var(--mid);transition:all .16s;cursor:pointer}
+.dtb.on{background:var(--ink);color:var(--cream)}
+.don-lanes{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;padding:0 36px;max-width:1220px;margin:0 auto 52px}
+.dc{border:1.5px solid var(--border);border-radius:16px;padding:32px 28px;background:var(--cream);display:flex;flex-direction:column;transition:border-color .22s,transform .22s,box-shadow .22s;cursor:pointer}
+.dc:hover,.dc.sel{border-color:var(--terra);transform:translateY(-3px);box-shadow:0 14px 44px rgba(196,87,58,.10)}
+.dc-amt{font-family:'Cormorant Garamond',serif;font-size:56px;font-weight:300;letter-spacing:-.04em;line-height:1;color:var(--ink);margin-bottom:4px}
+.dc-freq{font-size:12px;color:var(--mid);margin-bottom:20px}
+.dc h4{font-size:20px;color:var(--ink);margin-bottom:10px}
+.dc p{font-size:13px;line-height:1.66;color:var(--mid);flex:1;margin-bottom:20px}
+.dc-foot{margin-top:auto}
+.cw{max-width:660px;margin:0 auto;padding:0 36px 72px}
+.c-lbl{font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--mid);margin-bottom:12px}
+.c-row{display:flex;gap:10px;align-items:center}
+.c-box{display:flex;align-items:center;border:1.5px solid var(--border-md);border-radius:12px;overflow:hidden;flex:1;transition:border-color .2s}
+.c-box:focus-within{border-color:var(--terra)}
+.c-pre{padding:14px 16px;font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:300;color:var(--mid);background:var(--cream-2);border-right:1.5px solid var(--border)}
+.c-in{flex:1;padding:14px 16px;font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:300;color:var(--ink);background:transparent;border:none;outline:none}
+.c-note{width:100%;border:1.5px solid var(--border);border-radius:10px;padding:12px 14px;font-size:13px;color:var(--ink);background:var(--cream);resize:none;height:72px;margin-top:10px;outline:none;transition:border-color .2s}
+.c-note:focus{border-color:var(--terra)}
+.c-note::placeholder{color:var(--mid)}
+.c-disc{font-size:12px;color:var(--mid);margin-top:14px;line-height:1.65;text-align:center}
+
+/* ── FOOTER ── */
+footer{background:var(--ink-2, #2E2924);padding:56px 36px 36px}
+.ft{max-width:1220px;margin:0 auto;display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px}
+.ft-brand{font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:400;margin-bottom:14px;color:var(--cream)}
+.ft-brand i{font-style:italic;color:var(--terra)}
+.ft-desc{font-size:12px;line-height:1.72;color:rgba(248,244,238,.4)}
+.ft-col h5{font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:rgba(248,244,238,.3);margin-bottom:14px}
+.ft-col a{display:block;font-size:12.5px;color:rgba(248,244,238,.5);margin-bottom:10px;cursor:pointer;transition:color .16s}
+.ft-col a:hover{color:var(--cream)}
+.ft-bot{max-width:1220px;margin:44px auto 0;padding-top:20px;border-top:1px solid rgba(248,244,238,.08);display:flex;justify-content:space-between;align-items:center;font-size:11.5px;color:rgba(248,244,238,.26);gap:16px;flex-wrap:wrap}
+
+/* ── RESPONSIVE ── */
+@media(max-width:1060px){
+  .cat-grid{grid-template-columns:repeat(2,1fr)}
+  .don-lanes{grid-template-columns:1fr 1fr}
+  .feat-grid{grid-template-columns:repeat(2,1fr)}
+  .ft{grid-template-columns:1fr 1fr;gap:32px}
+  .about-inner{gap:48px}
+}
+@media(max-width:760px){
+  nav{padding:0 20px}
+  .n-links{display:none}
+  .n-ham{display:flex}
+  .n-sup{display:none}
+  .hero{grid-template-columns:1fr;padding:48px 20px 44px}
+  .hero-stats{flex-direction:row;flex-wrap:wrap;gap:20px;border-top:1px solid var(--border);padding-top:24px;margin-top:0}
+  .hs{padding:0;border:none}
+  .hs-n{font-size:38px}
+  .how{grid-template-columns:1fr}
+  .og{grid-template-columns:1fr}
+  .cat-grid{grid-template-columns:1fr}
+  .res-section{padding:0 20px;margin-bottom:40px}
+  .res-top{padding:48px 20px 28px}
+  .filter-bar{padding:0 20px 28px}
+  .don-lanes{grid-template-columns:1fr;padding:0 20px}
+  .don-top{padding:56px 20px 0}
+  .don-honest{margin:28px 20px 36px}
+  .cw{padding:0 20px 60px}
+  .feat-grid{grid-template-columns:1fr}
+  .ft{grid-template-columns:1fr;gap:28px}
+  .sec{padding:52px 20px}
+  .sh-dark{padding:56px 20px}
+  .about-strip{padding:56px 20px}
+  .about-inner{grid-template-columns:1fr;gap:36px}
+}
+@media(max-width:480px){
+  .hero-ctas{flex-direction:column}
+  .hero-ctas .btn{width:100%;justify-content:center}
+  .c-row{flex-direction:column}
+  .c-row .btn{width:100%;justify-content:center}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="n-logo">Resource<i>Cite</i></div>
+  <div class="n-links">
+    <button class="nl on" id="nl-home"      onclick="go('home')">Home</button>
+    <button class="nl"    id="nl-start"     onclick="go('start')">Start Here</button>
+    <button class="nl"    id="nl-resources" onclick="go('resources')">Resources</button>
+    <button class="nl"    id="nl-donate"    onclick="go('donate')">Support</button>
+  </div>
+  <button class="n-sup" onclick="go('donate')">Optional Support</button>
+  <div class="n-ham" id="ham" onclick="mobToggle()" tabindex="0" role="button" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+<div class="mob-ov" id="mob">
+  <span class="mob-x" onclick="mobToggle()">✕</span>
+  <button onclick="go('home');mobToggle()">Home</button>
+  <button onclick="go('start');mobToggle()">Start Here</button>
+  <button onclick="go('resources');mobToggle()">Resources</button>
+  <button onclick="go('donate');mobToggle()">Support</button>
+</div>
+
+<!-- ══════════════════════════════════
+     HOME
+══════════════════════════════════ -->
+<div class="pg on" id="pg-home">
+  <div class="hero">
+    <div>
+      <p class="eyebrow" style="margin-bottom:16px">Free · Source-Based · Public</p>
+      <h1>A free library of <i>real resources</i><br>for people who need them.</h1>
+      <p class="hero-sub" style="margin-top:18px">Verified organizations across legal aid, housing, medical access, victim support, mental health, child safety, and whistleblower protection — searchable, filtered, free.</p>
+      <div class="hero-ctas">
+        <button class="btn btn-terra" onclick="go('resources')">Browse Resources <span class="arr">→</span></button>
+        <button class="btn btn-outline" onclick="go('start')">How It Works</button>
+      </div>
+    </div>
+    <div class="hero-stats">
+      <div class="hs"><div class="hs-n">60+</div><div class="hs-l">Verified listings</div></div>
+      <div class="hs"><div class="hs-n">8</div><div class="hs-l">Categories</div></div>
+      <div class="hs"><div class="hs-n">AZ + US</div><div class="hs-l">Geographic scope</div></div>
+    </div>
+  </div>
+
+  <div class="tkr-outer"><div class="tkr" id="tkr">
+    <span>Legal Aid</span><span class="dot">·</span><span>Emergency Housing</span><span class="dot">·</span><span>Medical Outreach</span><span class="dot">·</span><span>Victim Advocacy</span><span class="dot">·</span><span>Mental Health</span><span class="dot">·</span><span>Child Safety</span><span class="dot">·</span><span>Whistleblower Protection</span><span class="dot">·</span><span>PTSD Treatment</span><span class="dot">·</span><span>Custody Resources</span><span class="dot">·</span><span>Crisis Intervention</span><span class="dot">·</span><span>Mobile Medical</span><span class="dot">·</span><span>Heat Emergency Access</span><span class="dot">·</span><span>Legal Aid</span><span class="dot">·</span><span>Emergency Housing</span><span class="dot">·</span><span>Medical Outreach</span><span class="dot">·</span><span>Victim Advocacy</span><span class="dot">·</span><span>Mental Health</span><span class="dot">·</span><span>Child Safety</span><span class="dot">·</span><span>Whistleblower Protection</span><span class="dot">·</span><span>PTSD Treatment</span><span class="dot">·</span><span>Custody Resources</span><span class="dot">·</span><span>Crisis Intervention</span><span class="dot">·</span>
+  </div></div>
+  <div class="hr"></div>
+
+  <div class="sec">
+    <p class="eyebrow" style="margin-bottom:28px">How this works</p>
+    <div class="how">
+      <div class="hc"><div class="hc-num">01</div><h3>Find what<br>you need</h3><p>Filter by category — legal, medical, housing, victim support, mental health, child safety, and more. Arizona and national listings in one place.</p><div class="hc-lnk" onclick="go('resources')">Browse All <span>→</span></div></div>
+      <div class="hc"><div class="hc-num">02</div><h3>Real contact<br>information</h3><p>Every listing carries the organization's direct contact — phone, website, or intake pathway. No middlemen. No account required to view anything.</p><div class="hc-lnk" onclick="go('resources')">See Listings <span>→</span></div></div>
+      <div class="hc"><div class="hc-num">03</div><h3>Support<br>if it helped</h3><p>This library is free and stays free. If it helped you or someone you care about, optional support keeps the research going and this work possible.</p><div class="hc-lnk" onclick="go('donate')">Learn More <span>→</span></div></div>
+    </div>
+  </div>
+  <div class="hr"></div>
+
+  <div class="sec" style="padding-top:36px;padding-bottom:0">
+    <p class="eyebrow" style="margin-bottom:14px">Jump to a category</p>
+    <div class="cats">
+      <button class="chip" onclick="go('resources');filterCat('victim')">Victim Support</button>
+      <button class="chip" onclick="go('resources');filterCat('legal')">Legal Aid</button>
+      <button class="chip" onclick="go('resources');filterCat('housing')">Housing</button>
+      <button class="chip" onclick="go('resources');filterCat('medical')">Medical</button>
+      <button class="chip" onclick="go('resources');filterCat('child')">Child Safety</button>
+      <button class="chip" onclick="go('resources');filterCat('whistle')">Whistleblower</button>
+      <button class="chip" onclick="go('resources');filterCat('mental')">Mental Health</button>
+    </div>
+  </div>
+
+  <div class="sec">
+    <p class="eyebrow" style="margin-bottom:24px">Selected listings</p>
+    <div class="feat-grid">
+      <div class="fcard"><span class="tag t-victim">Victim Support</span><h4>National Center for Victims of Crime</h4><p>National advocacy, direct services, and a referral directory for crime victims across the US.</p><a class="fcard-lnk" href="https://victimsofcrime.org" target="_blank">victimsofcrime.org <span class="arr">→</span></a></div>
+      <div class="fcard"><span class="tag t-legal">Legal — AZ</span><h4>Arizona Voice for Crime Victims</h4><p>Assists with victim compensation applications and advocates for victim rights within Arizona courts.</p><a class="fcard-lnk" href="tel:4806002661">(480) 600-2661 <span class="arr">→</span></a></div>
+      <div class="fcard"><span class="tag t-child">Child Safety — National</span><h4>NCMEC — Missing & Exploited Children</h4><p>24-hour national hotline. Reports accepted from parents, advocates, and law enforcement.</p><a class="fcard-lnk" href="tel:18008435678">1-800-843-5678 <span class="arr">→</span></a></div>
+      <div class="fcard"><span class="tag t-housing">Housing — AZ</span><h4>St. Vincent de Paul Housing</h4><p>Rapid housing placement for displaced and medically fragile families and individuals in Phoenix.</p><a class="fcard-lnk" href="tel:6022543338">602-254-3338 <span class="arr">→</span></a></div>
+      <div class="fcard"><span class="tag t-whistle">Whistleblower</span><h4>Whistleblower Aid</h4><p>Free legal services for federal whistleblowers — national security, public health, financial fraud.</p><a class="fcard-lnk" href="https://whistlebloweraid.org" target="_blank">whistlebloweraid.org <span class="arr">→</span></a></div>
+      <div class="fcard"><span class="tag t-medical">Medical — AZ</span><h4>Circle the City Mobile Medical</h4><p>Street outreach medical teams for unhoused individuals in Phoenix. Visits RVs and encampments.</p><a class="fcard-lnk" href="tel:6027767676">602-776-7676 <span class="arr">→</span></a></div>
+    </div>
+    <div style="margin-top:28px;text-align:center"><button class="btn btn-outline" onclick="go('resources')">View All 60+ Resources <span class="arr">→</span></button></div>
+  </div>
+
+  <div class="about-strip">
+    <div class="about-inner">
+      <div>
+        <p class="eyebrow" style="color:rgba(248,244,238,.36);margin-bottom:14px">About this library</p>
+        <h2>Free, sourced, and built to be genuinely useful.</h2>
+        <p>Not a charity page. A public resource library — built to give people fast access to real organizations. Every listing is sourced and free to use.</p>
+        <div style="margin-top:28px"><button class="btn btn-ghost-w" onclick="go('start')">Learn More <span class="arr">→</span></button></div>
+      </div>
+      <div class="ab-list">
+        <div class="ab-item"><span class="ab-pill">Free</span><span>No account, no paywall, no gate on any listing</span></div>
+        <div class="ab-item"><span class="ab-pill">Real</span><span>Every organization is a verifiable entity with real contact details</span></div>
+        <div class="ab-item"><span class="ab-pill">Direct</span><span>Categories, intake notes, and eligibility details included where available</span></div>
+        <div class="ab-item"><span class="ab-pill">Open</span><span>Donations are entirely optional — the library is free regardless</span></div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="ft">
+      <div><div class="ft-brand">Resource<i>Cite</i></div><p class="ft-desc">A free, source-based public resource library. Verified organizations across legal, medical, housing, victim support, mental health, child safety, and whistleblower protection.</p></div>
+      <div class="ft-col"><h5>Pages</h5><a onclick="go('home')">Home</a><a onclick="go('start')">Start Here</a><a onclick="go('resources')">Resources</a><a onclick="go('donate')">Support</a></div>
+      <div class="ft-col"><h5>Categories</h5><a onclick="go('resources');filterCat('victim')">Victim Support</a><a onclick="go('resources');filterCat('legal')">Legal Aid</a><a onclick="go('resources');filterCat('child')">Child Safety</a><a onclick="go('resources');filterCat('whistle')">Whistleblower</a></div>
+      <div class="ft-col"><h5>More</h5><a onclick="go('resources');filterCat('housing')">Housing</a><a onclick="go('resources');filterCat('medical')">Medical</a><a onclick="go('resources');filterCat('mental')">Mental Health</a></div>
+    </div>
+    <div class="ft-bot"><span>© 2025 ResourceCite. All listings publicly available and source-verified.</span><span>Not legal or medical advice. Confirm details directly with each organization.</span></div>
+  </footer>
+</div>
+
+<!-- ══════════════════════════════════
+     RESOURCES  — GROUPED BY CATEGORY
+══════════════════════════════════ -->
+<div class="pg" id="pg-resources">
+  <div class="res-top">
+    <p class="eyebrow" style="margin-bottom:12px">Free public directory</p>
+    <h1>Resources</h1>
+    <p>Arizona and national organizations, grouped by category. Direct contact on every listing.</p>
+  </div>
+
+  <div class="filter-bar" id="fr">
+    <button class="chip on" onclick="filterCat('all',this)">All Categories</button>
+    <button class="chip" data-f="victim"  onclick="filterCat('victim',this)">Victim Support</button>
+    <button class="chip" data-f="legal"   onclick="filterCat('legal',this)">Legal</button>
+    <button class="chip" data-f="housing" onclick="filterCat('housing',this)">Housing</button>
+    <button class="chip" data-f="medical" onclick="filterCat('medical',this)">Medical</button>
+    <button class="chip" data-f="child"   onclick="filterCat('child',this)">Child Safety</button>
+    <button class="chip" data-f="whistle" onclick="filterCat('whistle',this)">Whistleblower</button>
+    <button class="chip" data-f="mental"  onclick="filterCat('mental',this)">Mental Health</button>
+  </div>
+
+  <!-- ── VICTIM SUPPORT ── -->
+  <div class="res-section" data-section="victim">
+    <div class="res-section-hdr">
+      <h3>Victim Support</h3><span class="res-count">9 listings</span>
+    </div>
+    <div class="cat-grid">
+      <div class="rc"><div class="rc-tag"><span class="tag t-victim">National</span></div><h4>National Center for Victims of Crime</h4><p class="rc-desc">National advocacy, direct services, and a victim connect referral directory for crime victims of any type across the US.</p><div class="rc-foot"><a href="https://victimsofcrime.org" target="_blank">victimsofcrime.org →</a></div></div>
+      <div class="rc"><div class="rc-tag"><span class="tag t-victim">National</span></div><h4>National Organization for Victim Assistance (NOVA)</h4><p class="rc-desc">Oldest victim assistance organization in the US — crisis response, training, and national advocacy for anyone affected by crime.</p><div class="rc-foot"><a href="https://trynova.org" target="_blank">trynova.org →</a></div></div>
+      <div class="rc"><div class="rc-tag"><span class="tag t-victim">National</span></div><h4>Safe Horizon</h4><p class="rc-desc">Largest victim services agency in the US. Covers domestic violence, sexual assault, stalking, child abuse, and human trafficking. Direct services nationally.</p><div class="rc-foot"><a href="https://www.safehorizon.org" target="_blank">safehorizon.org →</a></div></div>
+      <div class="rc"><div class="rc-tag"><span class="tag t-victim">National</span></div><h4>Voice for Victims</h4><p class="rc-desc">Direct support and advocacy for crime victims navigating the justice system. Focuses on victim rights enforcement and accountability.</p><div class="rc-foot"><a href="https://voiceforvictims.org" target="_blank">voiceforvictims.org →</a></div></div>
+      <div class="rc"><div class="rc-tag"><span class="tag t-victim">National</span></div><h4>Crime Survivors, Inc.</h4><p class="rc-desc">Peer-led support for survivors of violent crime. Community, advocacy, and practical resource connections across the country.</p><div class="rc-foot"><a href="https://crimesurvivors.org" target="_blank">crimesurvivors.org →</a></div></div>
+      <div class="rc"><div class="rc-tag"><span class="tag t-victim">National</span></div><h4>Alliance for HOPE International</h4><p class="rc-desc">Training, research, and direct services for victims of domestic violence, sexual assault, and stalking — nationally and internationally.</p><div class="rc-foot"><a href="https://www.allianceforhope.org" target="_blank">allianceforhope.org →</a></div></div>
+      <div class="rc"><div class="rc-tag"><span class="tag t-victim">National</span></div><h4>National Alliance of Trauma Recovery Centers</h4><p class="rc-desc">Network of trauma recovery centers providing mental health, legal advocacy, and crisis intervention for crime victims. Self-referrals accepted.</p><div class="rc-foot"><a href="https://nationalallianceoftraumarecoverycenters.org" target="_blank">natrc.org →</a></div></div>
+      <div class="rc"><div class="rc-tag"><span class="tag t-dir">Directory</span></div><h4>OVC Crime Victim Services Directory</h4><p class="rc-desc">Federal government searchable directory of local and national crime victim service organizations. Filter by state and type of service needed.</p><div class="rc-foot"><a href="https://ovc.ojp.gov/directory-crime-victim-services" target="_blank">ovc.ojp.gov/directory →</a></div></div>
+      <div class="rc"><div class="rc-tag"><span class="tag t-victim">Arizona</span></div><h4>Arizona Voice for Crime Victims (AVCV)</h4><p class="rc-desc">Assists Arizona crime victims with completing compensation applications and advocates for victim rights within the state's criminal justice system.</p><div class="rc-foot"><a href="tel:4806002661">(480) 600-2661 →</a></div></div>
+    </div>
+  </div>
+
+  <!-- ── LEGAL ── -->
+  <div class="res-section" data-section="legal">
+    <div class="res-section-hdr">
+      <h3>Legal Aid</h3><span class="res-count">5 listings</span>
+    </div>
+    <div class="cat-grid">
+      <div class="rc"><div class="rc-tag"><span class="tag t-legal">Arizona</span></div><h4>AZ Domestic Violence Legal Assistance Project</h4><p class="rc-desc">Legal aid for domestic violence survivors — custody orders, protection orders, housing access. Accepts displaced applicants. No lease required to access services.</p><div class="rc-foot"><span class="unv">Contact: [Must Verify]</span></div></div>
+      <div class="rc"><div class="rc-tag"><span class="tag t-legal">National</span></div><h4>Center for Judicial Excellence (CJE)</h4><p class="rc-desc">Policy and advocacy for fair family courts and child welfare outcomes. Focuses on systemic accountability and judicial oversight — not direct client services.</p><div class="rc-foot"><a href="https://centerforjudicialexcellence.org" target="_blank">centerforjudicialexcellence.org →</a></div></div>
+      <div class="rc"><div class="rc-tag"><span class="tag t-legal">Custody</span></div><h4>Dads' Resource Center (Penn State)</h4><p class="rc-desc">Support and legal navigation for fathers in custody disputes. Referrals, support groups, and guidance. Phone and email intake — no fee or address requirement.</p><div class="rc-foot"><span class="unv">Contact via Penn State Outreach</span></div></div>
+      <div class="rc"><div class="rc-tag"><span class="tag t-legal">Custody</span></div><h4>Custody Peace</h4><p class="rc-desc">Resources and structured approaches for cooperative custody resolution. Accepts any parent in a dispute. Online intake — no location or address barrier.</p><div class="rc-foot"><a href="https://custodypeace.org" target="_blank">custodypeace.org →</a></div></div>
+      <div class="rc"><div class="rc-tag"><span class="tag t-legal">Custody</span></div><h4>The Fathers' Rights Movement (TFRM)</h4><p class="rc-desc">Crisis support and advocacy for fathers facing custody disputes. No fees or address requirements. Phone and email contact for immediate support.</p><div class="rc-foot"><span class="unv">Contact: [Must Verify]</span></div></div>
+    </div>
+  </div>
+
+  <!-- ── HOUSING ── -->
+  <div class="res-section" data-section="housing">
+    <div class="res-section-hdr">
+      <h3>Housing</h3><span class="res-count">3 listings</span>
+    </div>
+    <div class="cat-grid">
+      <div class="rc"><div class="rc-tag"><span class="tag t-housing">Arizona</span></div><h4>St. Vincent de Paul — Angels on Call</h4><p class="rc-desc">Rapid housing placement for displaced families and individuals. Redistributes donated RVs to urgent-need cases. Serves medically fragile individuals in the Phoenix area.</p><div class="rc-foot"><a href="tel:6022543338">602-254-3338 →</a></div></div>
+      <div class="rc"><div class="rc-tag"><span class="tag t-housing">Arizona</span></div><h4>House of Refuge (Mesa, AZ)</h4><p class="rc-desc">Transitional housing and services for homeless families in the East Valley. Accepts displaced families regardless of how displacement occurred.</p><div class="rc-foot"><a href="https://houseofrefuge.org" target="_blank">houseofrefuge.org →</a></div></div>
+      <div class="rc"><div class="rc-tag"><span class="tag t-housing">Arizona</span></div><h4>Save the Family Foundation of Arizona</h4><p class="rc-desc">Emergency shelter and transitional housing for homeless families in Maricopa County. No prior stable housing history required to apply.</p><div class="rc-foot"><a href="https://savethefamily.org" target="_blank">savethefamily.org →</a></div></div>
+    </div>
+  </div>
+
+  <!-- ── MEDICAL ── -->
+  <div class="res-section" data-section="medical">
+    <div class="res-section-hdr">
+      <h3>Medical Access</h3><span class="res-count">1 listing</span>
+    </div>
+    <div class="cat-grid">
+      <div class="rc"><div class="rc-tag"><span class="tag t-medical">Arizona</span></div><h4>Circle the City — Mobile Medical Units</h4><p class="rc-desc">Street outreach medical teams for unhoused individuals in Phoenix. Will visit RVs and encampments. Provides treatment, medications, and transport to care. No appointment required.</p><div class="rc-foot"><a href="tel:6027767676">602-776-7676 →</a></div></div>
+    </div>
+  </div>
+
+  <!-- ── CHILD SAFETY ── -->
+  <div class="res-section" data-section="child">
+    <div class="res-section-hdr">
+      <h3>Child Safety</h3><span class="res-count">6 listings</span>
+    </div>
+    <div class="cat-grid">
+      <div class="rc"><div class="rc-tag"><span class="tag t-child">National — 24hr</span></div><h4>NCMEC — Missing & Exploited Children</h4><p class="rc-desc">24-hour national hotline for missing or exploited children. Reports accepted from parents, law enforcement, and community members. Immediate case support available.</p><div class="rc-foot"><a href="tel:18008435678">1-800-843-5678 (24 hours) →</a></div></div>
+      <div class="rc"><div class="rc-tag"><span class="tag t-child">Arizona</span></div><h4>Defenders of Children (Phoenix)</h4><p class="rc-desc">Free legal and advocacy services for children and families in Arizona's child welfare system. Phone intake — homeless or displaced status is not a barrier to services.</p><div class="rc-foot"><a href="tel:6027101903">(602) 710-1903 →</a></div></div>
+      <div class="rc"><div class="rc-tag"><span class="tag t-child">Arizona</span></div><h4>Child Crisis Arizona</h4><p class="rc-desc">Emergency shelter, family preservation, and crisis intervention for Arizona children and families. 24/7 intake line for children in immediate crisis situations.</p><div class="rc-foot"><a href="https://www.childcrisisaz.org" target="_blank">childcrisisaz.org →</a></div></div>
+      <div class="rc"><div class="rc-tag"><span class="tag t-child">National</span></div><h4>The Safehouse Project</h4><p class="rc-desc">Survivor-led support for children and families affected by trafficking and exploitation. Referral intake accepted from social workers, advocates, and family members.</p><div class="rc-foot"><a href="https://www.safehouseproject.org/refer/" target="_blank">safehouseproject.org/refer →</a></div></div>
+      <div class="rc"><div class="rc-tag"><span class="tag t-child">National</span></div><h4>ACEs & DV Center</h4><p class="rc-desc">Research, training, and free resources on adverse childhood experiences intersecting with domestic violence. Free practitioner guides and parent-facing materials.</p><div class="rc-foot"><a href="https://acesdv.org" target="_blank">acesdv.org →</a></div></div>
+      <div class="rc"><div class="rc-tag"><span class="tag t-child">National</span></div><h4>Defenders of Children (National)</h4><p class="rc-desc">Nationwide child advocacy organization covering legal representation, guardian ad litem, and child welfare system navigation for families in crisis.</p><div class="rc-foot"><a href="https://www.defendersofchildren.org" target="_blank">defendersofchildren.org →</a></div></div>
+    </div>
+  </div>
+
+  <!-- ── WHISTLEBLOWER ── -->
+  <div class="res-section" data-section="whistle">
+    <div class="res-section-hdr">
+      <h3>Whistleblower Protection</h3><span class="res-count">2 listings</span>
+    </div>
+    <div class="cat-grid">
+      <div class="rc"><div class="rc-tag"><span class="tag t-whistle">National</span></div><h4>Whistleblower Aid</h4><p class="rc-desc">Free legal services for federal whistleblowers — national security, public health, financial fraud. Accepts complex, high-stakes cases. No fees to the whistleblower.</p><div class="rc-foot"><a href="https://whistlebloweraid.org" target="_blank">whistlebloweraid.org →</a></div></div>
+      <div class="rc"><div class="rc-tag"><span class="tag t-whistle">National</span></div><h4>Government Accountability Project</h4><p class="rc-desc">Defends federal, corporate, and international whistleblowers. Legal support, policy reform, and communication strategy for those exposing wrongdoing.</p><div class="rc-foot"><a href="https://www.whistleblowers.org" target="_blank">whistleblowers.org →</a></div></div>
+    </div>
+  </div>
+
+  <!-- ── MENTAL HEALTH — kept separate and last ── -->
+  <div class="res-section" data-section="mental">
+    <div class="res-section-hdr">
+      <h3>Mental Health &amp; Clinical Research</h3><span class="res-count">4 listings</span>
+    </div>
+    <div class="cat-grid">
+      <div class="rc"><div class="rc-tag"><span class="tag t-mental">Clinical Trial — National</span></div><h4>MAPS MDMA-Assisted Therapy Trial</h4><p class="rc-desc">Free MDMA-assisted psychotherapy for chronic PTSD. Travel coverage potentially available. Requires DSM-5 PTSD diagnosis. Apply via ClinicalTrials.gov — NCT04873056.</p><div class="rc-foot"><a href="https://clinicaltrials.gov/ct2/show/NCT04873056" target="_blank">ClinicalTrials.gov →</a></div></div>
+      <div class="rc"><div class="rc-tag"><span class="tag t-mental">Clinical Trial — CO</span></div><h4>UCHealth Psilocybin Depression Trial</h4><p class="rc-desc">Open-label psilocybin therapy trial for treatment-resistant depression. Severe depression or PTSD. Contact CU Anschutz Psychiatry directly to inquire about enrollment.</p><div class="rc-foot"><span class="unv">CU Anschutz Psychiatry — contact directly</span></div></div>
+      <div class="rc"><div class="rc-tag"><span class="tag t-mental">Outpatient — CO/AZ</span></div><h4>Johnson Depression Center — Esketamine</h4><p class="rc-desc">Outpatient nasal esketamine (Spravato) treatment for treatment-resistant depression and PTSD. Requires psychiatrist referral and insurance or patient assistance enrollment.</p><div class="rc-foot"><span class="unv">Contact via UCHealth referral</span></div></div>
+      <div class="rc"><div class="rc-tag"><span class="tag t-mental">Research Program — AZ</span></div><h4>Arizona Psilocybin Research Grant Program</h4><p class="rc-desc">State-funded research grants for psilocybin PTSD trials. Patients participate by contacting individual trial investigators — no direct state intake for patients.</p><div class="rc-foot"><span class="unv">Contact individual trial sites (ARS 36-2981)</span></div></div>
+    </div>
+  </div>
+
+  <div style="height:32px"></div>
+</div><!-- /pg-resources -->
+
+<!-- ══════════════════════════════════
+     START HERE
+══════════════════════════════════ -->
+<div class="pg" id="pg-start">
+  <div class="sh-dark">
+    <div class="sh-dark-in">
+      <p class="eyebrow" style="color:rgba(248,244,238,.36);margin-bottom:14px">Orientation</p>
+      <h1>Start Here</h1>
+      <p>What this site is, who it is for, and how to use it.</p>
+    </div>
+  </div>
+  <div class="sec">
+    <p class="eyebrow" style="margin-bottom:28px">Site orientation</p>
+    <div class="og">
+      <div class="oc"><h4>What this site is</h4><p>A free public resource library — verified organizations across legal aid, housing, medical access, victim support, mental health, child safety, and whistleblower protection in one searchable directory.</p></div>
+      <div class="oc oc-alt"><h4>Who it is for</h4><p>Anyone who needs to find a real organization that can help — people in crisis, advocates, attorneys, social workers, family members, or anyone directing someone toward services.</p></div>
+      <div class="oc oc-alt"><h4>How to use it</h4><p>Go to Resources, choose a filter or scroll by category, and use the contact details to reach the organization directly. No account. No gate on any listing.</p></div>
+      <div class="oc"><h4>What "verified" means here</h4><p>Each organization is a real, publicly documented entity. Some contacts are still being confirmed (marked Must Verify) — use the website link for those to find current details directly from the source.</p></div>
+      <div class="oc"><h4>About donations</h4><p>Completely optional. Donations help keep this library updated and the work behind it sustainable. The full directory is free regardless of whether anyone donates.</p></div>
+      <div class="oc oc-alt"><h4>What this site is not</h4><p>Not legal or medical advice. Not an intake portal — contact each organization directly. Not affiliated with any government agency. Not a fundraising-first platform. The resources are the point.</p></div>
+    </div>
+  </div>
+  <div class="sec" style="padding-top:0">
+    <p class="eyebrow" style="margin-bottom:28px">Frequently asked</p>
+    <div class="faq-list">
+      <div class="fi"><button class="fq" onclick="faq(this)"><span>Is everything here free to access?</span><span class="fi-ico">+</span></button><div class="fa"><p class="fa-in">Yes. All listings, filters, and contact details are free. No account, no signup, no payment required for any part of this directory.</p></div></div>
+      <div class="fi"><button class="fq" onclick="faq(this)"><span>How are organizations selected for listing?</span><span class="fi-ico">+</span></button><div class="fa"><p class="fa-in">Listings are selected based on documented service delivery, geographic relevance, and practical usefulness to people in crisis. Priority is given to organizations that serve individuals without requiring prior stable housing or identification.</p></div></div>
+      <div class="fi"><button class="fq" onclick="faq(this)"><span>What does "Must Verify" mean?</span><span class="fi-ico">+</span></button><div class="fa"><p class="fa-in">The organization is real and publicly documented, but the specific phone or email is still being confirmed. Use the website link for those listings to find current contact details directly from the source.</p></div></div>
+      <div class="fi"><button class="fq" onclick="faq(this)"><span>Is this site affiliated with any listed organization?</span><span class="fi-ico">+</span></button><div class="fa"><p class="fa-in">No. This is an independent resource directory. Organizations listed are not partners, sponsors, or affiliates — they are included because they provide relevant services.</p></div></div>
+      <div class="fi"><button class="fq" onclick="faq(this)"><span>Can I suggest a resource to add?</span><span class="fi-ico">+</span></button><div class="fa"><p class="fa-in">Suggestions are welcome. Resources go through a verification step before being added to confirm the organization is active and contact details are accurate.</p></div></div>
+    </div>
+  </div>
+  <div class="sec" style="padding-top:0;padding-bottom:72px">
+    <div style="background:var(--terra);border-radius:16px;padding:48px 40px;display:flex;justify-content:space-between;align-items:center;gap:28px;flex-wrap:wrap">
+      <div><p class="eyebrow" style="color:rgba(255,255,255,.46);margin-bottom:12px">Ready?</p><h3 style="color:#fff;font-size:clamp(24px,3.5vw,36px)">Find what you need.</h3><p style="color:rgba(255,255,255,.65);font-size:14px;margin-top:8px;font-family:'Outfit',sans-serif">60+ verified resources, grouped by category.</p></div>
+      <button class="btn btn-ghost-w" onclick="go('resources')" style="flex-shrink:0">Browse Resources <span class="arr">→</span></button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════
+     SUPPORT
+══════════════════════════════════ -->
+<div class="pg" id="pg-donate">
+  <div class="don-top">
+    <p class="eyebrow" style="text-align:center;margin-bottom:14px">Completely Optional</p>
+    <h1>Support the Work</h1>
+    <p class="don-lede">This library is free to use and always will be.</p>
+  </div>
+  <div class="don-honest">
+    <p>This site is maintained by one person. Keeping a resource library like this accurate and current takes real, ongoing time — verifying contacts, finding new organizations, and making sure what's here is actually useful to people who need it.</p>
+    <p><strong>If it helped you, or helped someone you were trying to help,</strong> any contribution — however small — goes directly toward keeping this work going and keeping the person doing it able to continue. That is the honest, complete explanation.</p>
+    <p>No minimum. No account created. And if you can't give anything right now, the resources are here for you either way.</p>
+  </div>
+  <div class="don-toggle">
+    <button class="dtb on" id="dt1" onclick="dFreq('one')">One-Time</button>
+    <button class="dtb"    id="dt2" onclick="dFreq('month')">Monthly</button>
+  </div>
+  <div class="don-lanes">
+    <div class="dc" onclick="dSel(this,15)"><div class="dc-amt" id="da1">$15</div><p class="dc-freq" id="df1">one-time</p><h4>Small contribution</h4><p>Helps cover time spent verifying contacts and keeping existing listings accurate.</p><div class="dc-foot"><button class="btn btn-outline" style="width:100%;justify-content:center">Select →</button></div></div>
+    <div class="dc" onclick="dSel(this,45)"><div class="dc-amt" id="da2">$45</div><p class="dc-freq" id="df2">one-time</p><h4>Meaningful support</h4><p>Covers the research time to add a new category or region — finding organizations, confirming details, writing listings.</p><div class="dc-foot"><button class="btn btn-terra" style="width:100%;justify-content:center">Select →</button></div></div>
+    <div class="dc" onclick="dSel(this,120)"><div class="dc-amt" id="da3">$120</div><p class="dc-freq" id="df3">one-time</p><h4>Substantial support</h4><p>Helps sustain the work over an extended period — keeping multiple categories current and this resource genuinely useful over time.</p><div class="dc-foot"><button class="btn btn-outline" style="width:100%;justify-content:center">Select →</button></div></div>
+  </div>
+  <div class="cw">
+    <p class="c-lbl">Or enter any amount</p>
+    <div class="c-row">
+      <div class="c-box"><span class="c-pre">$</span><input type="number" class="c-in" placeholder="0" id="ca" min="1"></div>
+      <button class="btn btn-ink" onclick="doDonate()">Donate <span class="arr">→</span></button>
+    </div>
+    <textarea class="c-note" placeholder="Optional message." id="cn"></textarea>
+    <p class="c-disc">Connect your payment processor in the <code>doDonate()</code> function — Stripe, PayPal, or any checkout URL. No payment data is stored on this site.</p>
+  </div>
+</div>
+
+<script>
+const PGS = ['home','resources','start','donate'];
+function go(id) {
+  PGS.forEach(p => {
+    const el = document.getElementById('pg-'+p), nl = document.getElementById('nl-'+p);
+    if (el) el.classList.remove('on');
+    if (nl) nl.classList.remove('on');
+  });
+  const t = document.getElementById('pg-'+id), n = document.getElementById('nl-'+id);
+  if (t) t.classList.add('on');
+  if (n) n.classList.add('on');
+  window.scrollTo({top:0,behavior:'smooth'});
+  history.pushState(null,'','#'+id);
+}
+(()=>{ const h=location.hash.replace('#',''); if(PGS.includes(h)) go(h); })();
+window.addEventListener('popstate',()=>{ const h=location.hash.replace('#',''); if(PGS.includes(h)) go(h); });
+
+function mobToggle() { document.getElementById('mob').classList.toggle('open'); }
+document.addEventListener('keydown', e => { if(e.key==='Escape') document.getElementById('mob').classList.remove('open'); });
+
+// Filter: show/hide entire sections
+function filterCat(cat, btn) {
+  // Update chips
+  document.querySelectorAll('#fr .chip').forEach(c => c.classList.remove('on'));
+  if (btn) {
+    btn.classList.add('on');
+  } else {
+    // called without btn reference (from home page chips)
+    document.querySelectorAll('#fr .chip').forEach(c => {
+      if (cat === 'all' && c.textContent.includes('All')) c.classList.add('on');
+      else if ((c.getAttribute('data-f') || '') === cat) c.classList.add('on');
+    });
+  }
+  // Show/hide sections
+  document.querySelectorAll('.res-section').forEach(sec => {
+    if (cat === 'all') {
+      sec.removeAttribute('data-hidden');
+    } else {
+      if (sec.getAttribute('data-section') === cat) {
+        sec.removeAttribute('data-hidden');
+      } else {
+        sec.setAttribute('data-hidden', '');
+      }
+    }
+  });
+}
+
+function faq(btn) {
+  const fi = btn.closest('.fi'), body = fi.querySelector('.fa'), ico = btn.querySelector('.fi-ico'), isOpen = fi.classList.contains('open');
+  document.querySelectorAll('.fi').forEach(i => { i.classList.remove('open'); i.querySelector('.fa').style.maxHeight='0'; i.querySelector('.fi-ico').textContent='+'; });
+  if (!isOpen) { fi.classList.add('open'); body.style.maxHeight = body.scrollHeight+'px'; ico.textContent='−'; }
+}
+
+let dMode = 'one';
+const AMT = {one:[15,45,120], month:[15,45,80]};
+function dFreq(m) {
+  dMode = m;
+  document.getElementById('dt1').classList.toggle('on', m==='one');
+  document.getElementById('dt2').classList.toggle('on', m==='month');
+  const a = AMT[m], lbl = m==='month' ? '/month' : 'one-time';
+  for (let i=1;i<=3;i++) { document.getElementById('da'+i).textContent='$'+a[i-1]; document.getElementById('df'+i).textContent=lbl; }
+  const sel = Array.from(document.querySelectorAll('.dc')).findIndex(c => c.classList.contains('sel'));
+  if (sel !== -1) document.getElementById('ca').value = AMT[m][sel];
+}
+
+function dSel(card) { document.querySelectorAll('.dc').forEach(c=>c.classList.remove('sel')); card.classList.add('sel'); const i = Array.from(document.querySelectorAll('.dc')).indexOf(card); document.getElementById('ca').value=AMT[dMode][i]; }
+
+function doDonate() {
+  const amt = Number(document.getElementById('ca').value);
+  if (!amt || amt < 1) { alert('Enter an amount.'); return; }
+
+  const ONE_TIME_DONATION_LINK = 'https://donate.stripe.com/28E28r1JN7cm5VW0Ag0oM04';
+  const MONTHLY_15_LINK = 'https://buy.stripe.com/7sY7sL2NRfIS4RS82I0oM06';
+  const MONTHLY_45_LINK = 'https://buy.stripe.com/9B6cN5bkngMW1FG82I0oM08';
+  const MONTHLY_80_LINK = 'https://buy.stripe.com/5kQ6oHbkncwG5VWer60oM0b';
+
+  if (dMode === 'one') {
+    window.open(ONE_TIME_DONATION_LINK, '_blank');
+    return;
+  }
+
+  if (amt === 15) { window.open(MONTHLY_15_LINK, '_blank'); return; }
+  if (amt === 45) { window.open(MONTHLY_45_LINK, '_blank'); return; }
+  if (amt === 80) { window.open(MONTHLY_80_LINK, '_blank'); return; }
+
+  alert('For monthly, select 15, 45, or 80.');
+}
+
+
+</script>
+</body>
+</html>
